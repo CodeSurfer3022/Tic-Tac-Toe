@@ -1,5 +1,8 @@
 function placeMark() {
-
+    console.log(this);
+    this.firstChild.textContent = game.turn.mark;
+    game.turn = game.turn === playerOne ? playerTwo : playerOne;
+    console.log(game.turn.mark);
 }
 
 function renderBoard(board) {
@@ -12,6 +15,18 @@ function renderBoard(board) {
         }
     );
 }
+//////////////////////////////
+const player = (mark) => {
+    return {mark};
+};
+
+const playerOne = player('X');
+const playerTwo = player('O');
+
+const game = (() => {
+    let turn = playerOne;
+    return {turn};
+})();
 
 const gameBoard = (() => {
     let board = ['', '', '',
