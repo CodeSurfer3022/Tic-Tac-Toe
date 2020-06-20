@@ -26,4 +26,10 @@ main {
     width: 30%;
     display: grid;
     grid-template: repeat(3, 1fr)/ repeat(3, 1fr);
+    grid-gap: 5px;
+}
+
+#board div {
+    background-color: dodgerblue;
+    text-align: center;
 }

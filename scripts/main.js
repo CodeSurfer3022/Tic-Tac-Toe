@@ -1,22 +1,29 @@
+function placeMark() {
+
+}
+
 function renderBoard(board) {
     board.forEach(value => {
+        let div = document.createElement('div');
         let p = document.createElement('p');
         p.textContent = value;
-        boardDiv.appendChild(p);
+        div.appendChild(p);
+        boardContainer.appendChild(div);
         }
     );
 }
 
 const gameBoard = (() => {
-    let board = ['X', 'O', 'X',
-                 'O', 'X', 'O',
-                 'X', 'O', 'X'];
-    let name = "what";
+    let board = ['', '', '',
+                 '', '', '',
+                 '', '', ''];
+    let name = "board";
     return {name, board};
 })();
 
 // main starts here
-const boardDiv = document.querySelector('div[id="board"]');
-
-console.log(gameBoard.name);
+const boardContainer = document.querySelector('#board');
 renderBoard(gameBoard.board);
+
+const cells = document.querySelectorAll('#board div');
+cells.forEach(cell => cell.addEventListener('click', placeMark));
