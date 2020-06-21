@@ -1,5 +1,10 @@
+
+
 function checkForWin(turn) {
-    // console.log('hm');
+    console.log(gameBoard.board);
+    checkRows();
+    checkCols();
+    checkDiags();
 }
 
 function placeMark() {
@@ -51,9 +56,16 @@ const gameBoard = (() => {
     let board = [['', '', ''],
                  ['', '', ''],
                  ['', '', '']];
-    let lines = []
+    let rows = [...board]
+    let cols = [];
+    for(let j = 0; j < 3; j ++) {
+        let col = board.map(row => row[j]);
+        cols.push(col);
+    }
+    let diags = [[board[0][0], board[1][1], board[2][2]],
+                 [board[0][2], board[1][1], board[2][0]]];
     let name = "board";
-    return {name, board};
+    return {name, board, rows, cols, diags};
 })();
 
 // main starts here
