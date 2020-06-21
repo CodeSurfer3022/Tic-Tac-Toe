@@ -1,8 +1,24 @@
 
 
-function checkForWin() {
-    console.log(gameBoard.board);
-    checkLines();
+function checkForWin(mark, rowNumber, colNumber) {
+    // we only need to check the row, col and diagonal that contains the cell
+    console.log(rowNumber, colNumber);
+    let row = gameBoard.board[rowNumber];
+    if(row.every(value => value === mark)) console.log("win");
+
+    let col = gameBoard.board.map(row => row[colNumber]);
+    if(col.every(value => value === mark)) console.log("win");
+
+    let rowColDiff = Math.abs(rowNumber - colNumber);
+    if(rowColDiff === 2 || rowColDiff === 0) {
+        if(rowNumber === colNumber) {
+            if(rowNumber + colNumber === 2) checkBothDiagonals();
+            else checkLeftDiagonal();
+        } else {
+            checkRightDiagonal();
+        }
+    }
+    console.log(row, col);
 }
 
 function placeMark() {
@@ -16,9 +32,11 @@ function placeMark() {
     game.moves ++;
     gameBoard.board[row][col] = game.turn.mark;
     p.textContent = game.turn.mark;
+    if(game.moves > 4) checkForWin(game.turn.mark, row, col);
+
+
     game.turn = game.turn === playerOne ? playerTwo : playerOne;
     heading.textContent = heading.textContent === 'Player 1' ? 'Player 2' : "Player 1";
-    if(game.moves > 4) checkForWin();
 }
 
 function renderBoard(board) {
@@ -54,25 +72,8 @@ const gameBoard = (() => {
     let board = [['', '', ''],
                  ['', '', ''],
                  ['', '', '']];
-    let rows = [...board]
-    let cols = [];
-    for(let j = 0; j < 3; j ++) {
-        let col = board.map(row => row[j]);
-        cols.push(col);
-    }
-    let diags = [];
-    for(let i = 0; i < 3; i ++) {
-        let diag = board.map(row => row[i][i]);
-        diags.push(diag);
-    }
-
-    for(let i = 0, j = 2; i < 3; i++, j --) {
-        let diag = board.map(row => row[i][j]);
-        diags.push(diag);
-    }
-
     let name = "board";
-    return {name, board, rows, cols, diags};
+    return {name, board};
 })();
 
 // main starts here
