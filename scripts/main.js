@@ -1,4 +1,19 @@
+function checkBothDiagonals() {
+    checkLeftDiagonal();
+    checkRightDiagonal();
+}
 
+function checkLeftDiagonal() {
+    let i = 0;
+    let leftDiag = gameBoard.board.map(row => row[i ++])
+    console.log(leftDiag);
+}
+
+function checkRightDiagonal() {
+    let i = 2;
+    let rightDiag = gameBoard.board.map(row => row[i --])
+    console.log(rightDiag);
+}
 
 function checkForWin(mark, rowNumber, colNumber) {
     // we only need to check the row, col and diagonal that contains the cell
