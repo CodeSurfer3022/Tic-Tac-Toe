@@ -1,26 +1,8 @@
-function checkDiags() {
-    let diagsToCheck = gameBoard.diags.filter(diag => diag.every(value => value));
-    if(!diagsToCheck.length) return;
-    console.log(diagsToCheck);
-}
 
-function checkCols() {
-    let colsToCheck = gameBoard.cols.filter(col => col.every(value => value));
-    if(!colsToCheck.length) return;
-    console.log(colsToCheck);
-}
 
-function checkRows() {
-    let rowsToCheck = gameBoard.rows.filter(row => row.every(value => value));
-    if(!rowsToCheck.length) return;
-    console.log(rowsToCheck);
-}
-
-function checkForWin(turn) {
+function checkForWin() {
     console.log(gameBoard.board);
-    checkRows();
-    checkCols();
-    checkDiags();
+    checkLines();
 }
 
 function placeMark() {
@@ -36,7 +18,7 @@ function placeMark() {
     p.textContent = game.turn.mark;
     game.turn = game.turn === playerOne ? playerTwo : playerOne;
     heading.textContent = heading.textContent === 'Player 1' ? 'Player 2' : "Player 1";
-    if(game.moves > 4) checkForWin(game.turn);
+    if(game.moves > 4) checkForWin();
 }
 
 function renderBoard(board) {
@@ -78,8 +60,17 @@ const gameBoard = (() => {
         let col = board.map(row => row[j]);
         cols.push(col);
     }
-    let diags = [[board[0][0], board[1][1], board[2][2]],
-                 [board[0][2], board[1][1], board[2][0]]];
+    let diags = [];
+    for(let i = 0; i < 3; i ++) {
+        let diag = board.map(row => row[i][i]);
+        diags.push(diag);
+    }
+
+    for(let i = 0, j = 2; i < 3; i++, j --) {
+        let diag = board.map(row => row[i][j]);
+        diags.push(diag);
+    }
+
     let name = "board";
     return {name, board, rows, cols, diags};
 })();
