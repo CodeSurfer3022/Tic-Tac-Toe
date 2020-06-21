@@ -1,25 +1,35 @@
+function checkForWin(turn) {
+    console.log('hm');
+}
+
 function placeMark() {
     console.log(this);
-    mark = this.firstChild.textContent;
-    if(mark) return;
-    this.firstChild.textContent = game.turn.mark;
+    let p = this.firstChild;
+    if(p.textContent) return;
+    game.moves ++;
+    p.textContent = game.turn.mark;
     game.turn = game.turn === playerOne ? playerTwo : playerOne;
     heading.textContent = heading.textContent === 'Player 1' ? 'Player 2' : "Player 1";
     console.log(game.turn.mark);
+    if(game.moves > 4) checkForWin(game.turn);
 }
 
 function renderBoard(board) {
-    board.forEach(value => {
-        let div = document.createElement('div');
-        let p = document.createElement('p');
-        p.textContent = value;
-        div.appendChild(p);
-        boardContainer.appendChild(div);
+    for(let i = 0; i < 3; i ++) {
+        for(let j = 0; j < 3; j ++) {
+            let div = document.createElement('div');
+            div.id = `${i}${j}`;
+            let p = document.createElement('p');
+            p.textContent = board[i][j];
+            div.appendChild(p);
+            boardContainer.appendChild(div);
         }
-    );
+    }
 }
 
-//////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Factories and modules
+////////////////////////////////////////////////////////////////////////////////////////////////////
 const player = (mark) => {
     return {mark};
 };
@@ -28,14 +38,16 @@ const playerOne = player('X');
 const playerTwo = player('O');
 
 const game = (() => {
+    let moves = 0;
     let turn = playerOne;
-    return {turn};
+    return {moves, turn};
 })();
 
 const gameBoard = (() => {
-    let board = ['', '', '',
-                 '', '', '',
-                 '', '', ''];
+    let board = [['', '', ''],
+                 ['', '', ''],
+                 ['', '', '']];
+    let lines = []
     let name = "board";
     return {name, board};
 })();
