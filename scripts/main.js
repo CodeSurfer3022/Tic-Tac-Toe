@@ -1,4 +1,20 @@
+function checkDiags() {
+    let diagsToCheck = gameBoard.diags.filter(diag => diag.every(value => value));
+    if(!diagsToCheck.length) return;
+    console.log(diagsToCheck);
+}
 
+function checkCols() {
+    let colsToCheck = gameBoard.cols.filter(col => col.every(value => value));
+    if(!colsToCheck.length) return;
+    console.log(colsToCheck);
+}
+
+function checkRows() {
+    let rowsToCheck = gameBoard.rows.filter(row => row.every(value => value));
+    if(!rowsToCheck.length) return;
+    console.log(rowsToCheck);
+}
 
 function checkForWin(turn) {
     console.log(gameBoard.board);
