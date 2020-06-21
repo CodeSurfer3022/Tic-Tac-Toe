@@ -1,16 +1,20 @@
 function checkForWin(turn) {
-    console.log('hm');
+    // console.log('hm');
 }
 
 function placeMark() {
-    console.log(this);
     let p = this.firstChild;
     if(p.textContent) return;
+
+    let cell = this.id;
+    let row = +cell[0];
+    let col = +cell[1];
+
     game.moves ++;
+    gameBoard.board[row][col] = game.turn.mark;
     p.textContent = game.turn.mark;
     game.turn = game.turn === playerOne ? playerTwo : playerOne;
     heading.textContent = heading.textContent === 'Player 1' ? 'Player 2' : "Player 1";
-    console.log(game.turn.mark);
     if(game.moves > 4) checkForWin(game.turn);
 }
 
@@ -60,4 +64,3 @@ const cells = document.querySelectorAll('#board div');
 cells.forEach(cell => cell.addEventListener('click', placeMark));
 
 const heading = document.querySelector('h1');
-console.log(heading)
