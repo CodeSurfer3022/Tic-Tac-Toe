@@ -8,6 +8,11 @@ body {
     width: 100%;
 }
 
+header {
+    text-align: center;
+    font-size: xx-large;
+}
+
 main {
     height: 80%;
     width: 80%;
@@ -24,6 +29,10 @@ main {
     background-color: antiquewhite;
     height: 30%;
     width: 30%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: grid;
     grid-template: repeat(3, 1fr)/ repeat(3, 1fr);
     grid-gap: 5px;
