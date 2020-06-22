@@ -1,38 +1,53 @@
-function checkBothDiagonals() {
-    checkLeftDiagonal();
-    checkRightDiagonal();
+function checkBothDiagonals(mark) {
+    checkLeftDiagonal(mark);
+    checkRightDiagonal(mark);
 }
 
-function checkLeftDiagonal() {
+function checkLeftDiagonal(mark) {
     let i = 0;
     let leftDiag = gameBoard.board.map(row => row[i ++])
     console.log(leftDiag);
+    if(leftDiag.every(value => value === mark)) {
+        console.log(`${mark} wins`);
+    }
 }
 
-function checkRightDiagonal() {
+function checkRightDiagonal(mark) {
     let i = 2;
     let rightDiag = gameBoard.board.map(row => row[i --])
     console.log(rightDiag);
+    if(rightDiag.every(value => value === mark)) {
+        console.log(`${mark} wins`);
+    }
 }
 
 function checkForWin(mark, rowNumber, colNumber) {
     // we only need to check the row, col and diagonal that contains the cell
     console.log(rowNumber, colNumber);
+
     let row = gameBoard.board[rowNumber];
-    if(row.every(value => value === mark)) console.log("win");
+    if(row.every(value => value === mark)) {
+        console.log(`${mark} wins`);
+        return;
+    }
 
     let col = gameBoard.board.map(row => row[colNumber]);
-    if(col.every(value => value === mark)) console.log("win");
+    if(col.every(value => value === mark)) {
+        console.log(`${mark} wins`);
+        return;
+    }
 
+    // we need to check diagonals if the latest mark was in a diagonal cell
     let rowColDiff = Math.abs(rowNumber - colNumber);
     if(rowColDiff === 2 || rowColDiff === 0) {
         if(rowNumber === colNumber) {
-            if(rowNumber + colNumber === 2) checkBothDiagonals();
-            else checkLeftDiagonal();
+            if(rowNumber + colNumber === 2) checkBothDiagonals(mark);
+            else checkLeftDiagonal(mark);
         } else {
-            checkRightDiagonal();
+            checkRightDiagonal(mark);
         }
     }
+
     console.log(row, col);
 }
 
@@ -44,12 +59,20 @@ function placeMark() {
     let row = +cell[0];
     let col = +cell[1];
 
+    // Keep track of number of moves to check for end of game
     game.moves ++;
-    gameBoard.board[row][col] = game.turn.mark;
-    p.textContent = game.turn.mark;
-    if(game.moves > 4) checkForWin(game.turn.mark, row, col);
+    let currentMark = game.turn.mark;
 
+    // Update mark in gameBoard and display
+    gameBoard.board[row][col] = currentMark;
+    p.textContent = currentMark;
 
+    if(game.moves > 4) {
+        // if(game.moves === 9) console.log("It's a tie");
+        checkForWin(game.turn.mark, row, col);
+    }
+
+    // Update the turn for next player
     game.turn = game.turn === playerOne ? playerTwo : playerOne;
     heading.textContent = heading.textContent === 'Player 1' ? 'Player 2' : "Player 1";
 }
