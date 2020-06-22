@@ -1,24 +1,20 @@
 function checkBothDiagonals(mark) {
-    checkLeftDiagonal(mark);
-    checkRightDiagonal(mark);
+    return checkLeftDiagonal(mark) || checkRightDiagonal(mark);
 }
 
 function checkLeftDiagonal(mark) {
     let i = 0;
     let leftDiag = gameBoard.board.map(row => row[i ++])
     console.log(leftDiag);
-    if(leftDiag.every(value => value === mark)) {
-        console.log(`${mark} wins`);
-    }
+    return leftDiag.every(value => value === mark);
 }
 
 function checkRightDiagonal(mark) {
     let i = 2;
     let rightDiag = gameBoard.board.map(row => row[i --])
     console.log(rightDiag);
-    if(rightDiag.every(value => value === mark)) {
-        console.log(`${mark} wins`);
-    }
+    return rightDiag.every(value => value === mark);
+
 }
 
 function checkForWin(mark, rowNumber, colNumber) {
@@ -26,29 +22,28 @@ function checkForWin(mark, rowNumber, colNumber) {
     console.log(rowNumber, colNumber);
 
     let row = gameBoard.board[rowNumber];
-    if(row.every(value => value === mark)) {
-        console.log(`${mark} wins`);
-        return;
-    }
+    if(row.every(value => value === mark)) return true;
 
     let col = gameBoard.board.map(row => row[colNumber]);
-    if(col.every(value => value === mark)) {
-        console.log(`${mark} wins`);
-        return;
-    }
+    if(col.every(value => value === mark)) return true;
 
     // we need to check diagonals if the latest mark was in a diagonal cell
     let rowColDiff = Math.abs(rowNumber - colNumber);
     if(rowColDiff === 2 || rowColDiff === 0) {
         if(rowNumber === colNumber) {
-            if(rowNumber + colNumber === 2) checkBothDiagonals(mark);
-            else checkLeftDiagonal(mark);
+            if(rowNumber + colNumber === 2) {
+                if(checkBothDiagonals(mark)) return true;
+            }
+            else {
+                if (checkLeftDiagonal(mark)) return true;
+            }
         } else {
-            checkRightDiagonal(mark);
+            if(checkRightDiagonal(mark)) return true;
         }
     }
 
     console.log(row, col);
+    return false;
 }
 
 function placeMark() {
@@ -67,14 +62,18 @@ function placeMark() {
     gameBoard.board[row][col] = currentMark;
     p.textContent = currentMark;
 
+    // Check if the current player won after placing the current mark
+    let playerWon;
     if(game.moves > 4) {
         // if(game.moves === 9) console.log("It's a tie");
-        checkForWin(game.turn.mark, row, col);
+        playerWon = checkForWin(game.turn.mark, row, col);
+        if(playerWon) console.log(game.turn.name + ' won');
+        return;
     }
 
     // Update the turn for next player
     game.turn = game.turn === playerOne ? playerTwo : playerOne;
-    heading.textContent = heading.textContent === 'Player 1' ? 'Player 2' : "Player 1";
+    heading.textContent = game.turn.name;
 }
 
 function renderBoard(board) {
@@ -93,12 +92,12 @@ function renderBoard(board) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Factories and modules
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-const player = (mark) => {
-    return {mark};
+const player = (name, mark) => {
+    return {name, mark};
 };
 
-const playerOne = player('X');
-const playerTwo = player('O');
+const playerOne = player('player 1', 'X');
+const playerTwo = player('player 2', 'O');
 
 const game = (() => {
     let moves = 0;
