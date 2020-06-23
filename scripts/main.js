@@ -1,3 +1,4 @@
+
 function checkBothDiagonals(mark) {
     return checkLeftDiagonal(mark) || checkRightDiagonal(mark);
 }
@@ -48,6 +49,7 @@ function checkForWin(mark, rowNumber, colNumber) {
 
 function placeMark() {
     let p = this.firstChild;
+    console.log(p)
     if(p.textContent) return;
 
     let cell = this.id;
@@ -65,15 +67,24 @@ function placeMark() {
     // Check if the current player won after placing the current mark
     let playerWon;
     if(game.moves > 4) {
-        // if(game.moves === 9) console.log("It's a tie");
         playerWon = checkForWin(game.turn.mark, row, col);
-        if(playerWon) console.log(game.turn.name + ' won');
-        return;
+        if(playerWon) {
+            endGame(game.turn.name, ' won');
+        } else {
+            if(game.moves === 9) endGame(game.turn.name, 'tie');
+        }
     }
 
     // Update the turn for next player
     game.turn = game.turn === playerOne ? playerTwo : playerOne;
-    heading.textContent = game.turn.name;
+    playerName.textContent = game.turn.name;
+}
+
+function updatePlayerNames() {
+    playerOne.name = document.playerInfo.player1.value;
+    playerTwo.name = document.playerInfo.player2.value;
+    playerName.textContent = playerOne.name;
+    popupContainer.style.display = 'none';
 }
 
 function renderBoard(board) {
@@ -117,7 +128,12 @@ const gameBoard = (() => {
 const boardContainer = document.querySelector('#board');
 renderBoard(gameBoard.board);
 
+const popupContainer = document.querySelector('#popup-container');
+
+const save = document.querySelector('input[value="Save"]');
+save.addEventListener('click', updatePlayerNames);
+
+const playerName = document.querySelector('#current-player p');
+
 const cells = document.querySelectorAll('#board div');
 cells.forEach(cell => cell.addEventListener('click', placeMark));
-
-const heading = document.querySelector('h1');

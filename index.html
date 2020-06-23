@@ -14,7 +14,9 @@
     <main>
 
         <div id="board-container">
-            <p></p>
+            <div id="current-player">
+                <p></p>
+            </div>
             <div id="board"></div>
             <button>Restart game</button>
         </div>
@@ -25,15 +27,20 @@
     </footer>
     <div id="popup-container">
         <div id="popup">
-            <form>
+            <form name="playerInfo">
                 <label for="player1">Player 1</label>
                 <input type="text" id="player1" name="player1">
                 <br>
                 <label for="player2">Player 2</label>
                 <input type="text" id="player2" name="player2">
-                <br>A
+                <br>
                 <input type="button" value="Save">
             </form>
+        </div>
+    </div>
+    <div id="results">
+        <div>
+            <p id="winner"></p>
         </div>
     </div>
     <script src="scripts/main.js"></script>
