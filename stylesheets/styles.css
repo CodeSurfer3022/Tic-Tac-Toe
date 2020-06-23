@@ -42,3 +42,28 @@ main {
     background-color: dodgerblue;
     text-align: center;
 }
+
+#popup-container {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+}
+
+#popup {
+    height: 300px;
+    width: 500px;
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+footer {
+    height: 10%;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    font-size: xx-large;
+}

@@ -12,18 +12,30 @@
         <h1>Play Tic-Tac-Toe</h1>
     </header>
     <main>
-        <form>
-            <input type="text">
-            <input type="text">
-            <input type="submit">
-        </form>
-        <div id="board"></div>
-        <p>May the smartest man win!</p>
-        <button>Restart game</button>
+
+        <div id="board-container">
+            <p></p>
+            <div id="board"></div>
+            <button>Restart game</button>
+        </div>
+
     </main>
     <footer>
-
+        <p>May the smartest man win!</p>
     </footer>
+    <div id="popup-container">
+        <div id="popup">
+            <form>
+                <label for="player1">Player 1</label>
+                <input type="text" id="player1" name="player1">
+                <br>
+                <label for="player2">Player 2</label>
+                <input type="text" id="player2" name="player2">
+                <br>A
+                <input type="button" value="Save">
+            </form>
+        </div>
+    </div>
     <script src="scripts/main.js"></script>
 </body>
 </html>
