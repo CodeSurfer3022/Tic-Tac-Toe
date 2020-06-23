@@ -1,3 +1,20 @@
+function restartGame() {
+    clearBoard(gameBoard.board);
+    resultsContainer.style.display = 'none';
+}
+
+function endGame(player, result) {
+    if(result === 'tie') {
+        resultMsg.textContent = "It's a tie";
+    }
+    else {
+        resultMsg.textContent = `${player} won the game`
+    }
+    game.turn = playerOne;
+    playerName.textContent = player;
+    game.moves = 0;
+    resultsContainer.style.display = 'block';
+}
 
 function checkBothDiagonals(mark) {
     return checkLeftDiagonal(mark) || checkRightDiagonal(mark);
@@ -70,8 +87,12 @@ function placeMark() {
         playerWon = checkForWin(game.turn.mark, row, col);
         if(playerWon) {
             endGame(game.turn.name, ' won');
+            return;
         } else {
-            if(game.moves === 9) endGame(game.turn.name, 'tie');
+            if(game.moves === 9) {
+                endGame(game.turn.name, 'tie');
+                return;
+            }
         }
     }
 
@@ -85,6 +106,17 @@ function updatePlayerNames() {
     playerTwo.name = document.playerInfo.player2.value;
     playerName.textContent = playerOne.name;
     popupContainer.style.display = 'none';
+}
+
+function clearBoard(board) {
+    for(let i = 0; i < 3; i ++) {
+        for(let j = 0; j < 3; j ++) {
+            let cell = document.querySelector(`div[id="${i}${j}"]`);
+            let p = cell.querySelector('p');
+            board[i][j] = '';
+            p.textContent = board[i][j];
+        }
+    }
 }
 
 function renderBoard(board) {
@@ -137,3 +169,9 @@ const playerName = document.querySelector('#current-player p');
 
 const cells = document.querySelectorAll('#board div');
 cells.forEach(cell => cell.addEventListener('click', placeMark));
+
+const resultsContainer = document.querySelector('#results-container');
+const resultMsg = resultsContainer.querySelector('p');
+
+const restart = document.querySelector('button[value="restart"]');
+restart.addEventListener('click', restartGame);

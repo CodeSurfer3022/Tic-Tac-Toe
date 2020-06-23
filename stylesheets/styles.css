@@ -56,14 +56,14 @@ main {
     text-align: center;
 }
 
-#popup-container {
+#popup-container, #results-popup {
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     position: absolute;
 }
 
-#popup {
+#popup, #results {
     height: 300px;
     width: 500px;
     background-color: white;
@@ -73,12 +73,12 @@ main {
     transform: translate(-50%, -50%);
 }
 
-#results {
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    position: absolute;
+#results-container {
     display: none;
+}
+
+#results {
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 footer {
