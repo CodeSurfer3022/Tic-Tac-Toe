@@ -1,42 +1,22 @@
-html {
-    height: 100vh;
-    width: 100vw;
-}
-
-body {
-    height: 100%;
-    width: 100%;
-}
-
 header {
-    width: 100%;
     text-align: center;
-    font-size: xx-large;
-    position: absolute;
-    top: 0;
+    font-family: Helvetica, sans-serif;
+}
+
+h1 {
+    letter-spacing: 1rem;
+    color: #012;
+    font-weight: 400;
 }
 
 main {
-    height: 80%;
-    width: 80%;
-    background-color: aquamarine;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
+    height: 600px;
+    background: greenyellow;
 }
 
 #board-container{
-    background-color: antiquewhite;
-    height: 40%;
-    width: 40%;
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
+    height: 100px;
+    width: 200px;
 }
 
 #current-player {
@@ -44,14 +24,13 @@ main {
 }
 
 #board {
-    height: 90%;
-    width: 90%;
     display: grid;
     grid-template: repeat(3, 1fr)/ repeat(3, 1fr);
-    grid-gap: 5px;
+    border: 1px solid white;
 }
 
 #board div {
+    border: 1px solid white;
     background-color: dodgerblue;
     text-align: center;
 }
@@ -81,10 +60,18 @@ main {
     background-color: rgba(255, 255, 255, 0.5);
 }
 
+#popup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+input {
+    margin: 10px;
+}
+
 footer {
-    width: 100%;
-    position: absolute;
-    bottom: 0;
     text-align: center;
     font-size: xx-large;
 }
