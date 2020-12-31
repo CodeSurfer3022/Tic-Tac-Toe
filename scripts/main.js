@@ -13,7 +13,7 @@ function endGame(player, result) {
     game.turn = playerOne;
     playerName.textContent = player;
     game.moves = 0;
-    resultsContainer.style.display = 'block';
+    resultsContainer.style.display = 'flex';
 }
 
 function checkBothDiagonals(mark) {
@@ -101,7 +101,8 @@ function placeMark() {
     playerName.textContent = game.turn.name;
 }
 
-function updatePlayerNames() {
+function updatePlayerNames(event) {
+    event.preventDefault();
     playerOne.name = document.playerInfo.player1.value;
     playerTwo.name = document.playerInfo.player2.value;
     playerName.textContent = playerOne.name;
@@ -162,7 +163,7 @@ renderBoard(gameBoard.board);
 
 const popupContainer = document.querySelector('#popup-container');
 
-const save = document.querySelector('input[value="Save"]');
+const save = document.querySelector('button');
 save.addEventListener('click', updatePlayerNames);
 
 const playerName = document.querySelector('#current-player p');
